@@ -19,13 +19,25 @@ var io = socketIO(server);
 app.use(express.static(publicPath))
 
 
-io.on('connection', (socket)=>{
-	console.log('New User Connected');
+io.on('connection', (socket) => {
+    console.log('New User Connected');
+
+    //emmitting the new message to the client, from the server
+    socket.emit('newMessage', {
+    	from: 'Jose',
+    	text: 'The meeting is at six, form the server',
+    	createdAt: 123
+    });
 
 
-	socket.on('disconnect',()=>{
-		console.log('dißsconnected from server');
-	});
+    //this listens to an event from the client to the server
+    socket.on('createMessage', (newMessage) => {
+    	console.log('createMessage', newMessage);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('user was disconnected');
+    });
 });
 
 //configure the port
