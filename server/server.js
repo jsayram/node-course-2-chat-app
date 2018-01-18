@@ -24,15 +24,15 @@ io.on('connection', (socket) => {
     console.log('New User Connected');
 
     socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
-
     socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'));
 
 
     //this listens to an event from the client to the server
-    socket.on('createMessage', (message) => {
+    socket.on('createMessage', (message, callback) => {
         console.log('createMessage', message);
         /*emits to every single connection*/
         io.emit('newMessage', generateMessage(message.from, message.text));
+        callback('This is from the server');
 
         // socket.broadcast.emit('newMessage', {
         // 	from: message.from,
