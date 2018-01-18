@@ -3,11 +3,6 @@ var socket = io();
 socket.on('connect', function() {
     console.log('connected to server');
 
-    //emits to the server 
-    socket.emit('createMessage', {
-    	from: 'Jose',
-    	text: 'Yeah that works from me, the client side'
-    });
 });
 
 socket.on('disconnect', function() {
@@ -15,7 +10,7 @@ socket.on('disconnect', function() {
 });
 
 
-//event listener to get data from the server 
-socket.on('newMessage', function (message) {
-	console.log('Got New Message', message);
+//event listenier from the server 
+socket.on('newMessage', function (newMessage) {
+	console.log('Got New Message', newMessage);
 });
