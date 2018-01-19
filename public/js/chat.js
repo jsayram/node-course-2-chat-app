@@ -19,13 +19,7 @@ function scrollToBottom() {
 
 		messages.scrollTop(scrollHeight);
 	};
-
-
-
 };
-
-
-
 
 
 socket.on('connect', function() {
