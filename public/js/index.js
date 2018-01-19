@@ -12,31 +12,27 @@ socket.on('disconnect', function() {
 
 //event listenier from the server 
 socket.on('newMessage', function (message) {
-	console.log('Got newMessage', message);
+	// console.log('Got newMessage', message);
+
+	var formattedTime = moment(message.createdAt).format('h:mm a'); //this formats the time
+
 	var li = jQuery('<li></li>');
-	li.text(`${message.from}: ${message.text}`);
+	li.text(`${message.from} ${formattedTime}: ${message.text}`);
 
 	jQuery('#messages').append(li);
 	
 });
 
-
-// socket.emit('createMessage', {
-// 	from : 'Frank', 
-// 	text: 'HELLLOOOO'
-// }, function (data) {
-// 	console.log('Got it', data);
-// });
-
-
 /* setting up location listener */
 socket.on('newLocationMessage', function(message) {
-	 console.log(message);
+	 // console.log(message);
+	var formattedTime = moment(message.createdAt).format('h:mm a'); //this formats the time
+	
 	var li = jQuery('<li></li>');
 	//target set to blank to open up a new tab
 	var a = jQuery('<a target="_blank"> My currrent location </a>');
 
-	li.text(`${message.from}: `);
+	li.text(`${message.from} ${formattedTime}: `);
 	a.attr('href', message.url);
 	li.append(a);
 	jQuery('#messages').append(li);
