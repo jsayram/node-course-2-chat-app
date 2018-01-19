@@ -42,6 +42,17 @@ socket.on('disconnect', function() {
     console.log('disconnected from server');
 });
 
+//listener for updating user list
+socket.on('updateUserList', function(users){
+	console.log('User list', users);
+	var ol = jQuery('<ol></ol>');
+
+	users.forEach(function (user) {
+		ol.append(jQuery('<li></li>').text(user));
+	});
+	jQuery('#users').html(ol);
+})
+
 
 //event listenier from the server 
 socket.on('newMessage', function (message) {
