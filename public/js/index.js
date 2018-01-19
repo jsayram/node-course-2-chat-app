@@ -15,27 +15,48 @@ socket.on('newMessage', function (message) {
 	// console.log('Got newMessage', message);
 
 	var formattedTime = moment(message.createdAt).format('h:mm a'); //this formats the time
+	var template = jQuery('#message-template').html();
+	var html = Mustache.render(template, {
+		text: message.text,
+		from: message.from,
+		createdAt: formattedTime
+	});
 
-	var li = jQuery('<li></li>');
-	li.text(`${message.from} ${formattedTime}: ${message.text}`);
+	jQuery('#messages').append(html);
 
-	jQuery('#messages').append(li);
+
+    /* old way of doing things */
+	// var formattedTime = moment(message.createdAt).format('h:mm a'); //this formats the time
+	// var li = jQuery('<li></li>');
+	// li.text(`${message.from} ${formattedTime}: ${message.text}`);
+	// jQuery('#messages').append(li);
 	
 });
 
 /* setting up location listener */
 socket.on('newLocationMessage', function(message) {
 	 // console.log(message);
-	var formattedTime = moment(message.createdAt).format('h:mm a'); //this formats the time
-	
-	var li = jQuery('<li></li>');
-	//target set to blank to open up a new tab
-	var a = jQuery('<a target="_blank"> My currrent location </a>');
 
-	li.text(`${message.from} ${formattedTime}: `);
-	a.attr('href', message.url);
-	li.append(a);
-	jQuery('#messages').append(li);
+	var formattedTime = moment(message.createdAt).format('h:mm a'); //this formats the time
+	var template = jQuery('#location-message-template').html();
+	var html = Mustache.render(template, {
+		from: message.from,
+		url: message.url,
+		createdAt: formattedTime
+	});
+
+	jQuery('#messages').append(html);
+
+
+	/* old way of doing it */
+	// var formattedTime = moment(message.createdAt).format('h:mm a'); //this formats the time
+	// var li = jQuery('<li></li>');
+	// //target set to blank to open up a new tab
+	// var a = jQuery('<a target="_blank"> My currrent location </a>');
+	// li.text(`${message.from} ${formattedTime}: `);
+	// a.attr('href', message.url);
+	// li.append(a);
+	// jQuery('#messages').append(li);
 });
 
 
